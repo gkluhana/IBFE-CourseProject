@@ -1,0 +1,35 @@
+function Mbar = mass(Nb )
+global dtheta T elemNodes elems basis_type
+
+% e = ones(Nb,1);
+% Mbar = spdiags([e 4*e e], -1:1, Nb,Nb);
+% 
+% % periodic BC
+% Mbar(1,end) = 1;
+% Mbar(end,1) = 1;
+% Mbar = dtheta/6 * Mbar;
+
+% Assemble with loops and quadrature
+Mbar = zeros(Nb);
+
+[quadPoints,quadWeights] = quadrature();
+
+detJ = dtheta/2;
+Mlocal = zeros(elemNodes);
+for e = 1:length(T)
+    Mlocal(:) = 0;
+    for q1 = 1:length(quadPoints)
+        for i = 1:elemNodes
+            for j = 1:elemNodes
+                Mlocal(i,j) = Mlocal(i,j) +basisFunction(i,quadPoints(q1)) ...
+                    *basisFunction(j,quadPoints(q1))*quadWeights(q1)*detJ;
+            end
+        end
+    end
+    Mbar(T(:,e),T(:,e)) = Mbar(T(:,e),T(:,e))+Mlocal;    
+end
+% periodic BC
+% keyboard
+
+return
+

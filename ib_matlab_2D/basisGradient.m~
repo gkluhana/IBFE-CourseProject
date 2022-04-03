@@ -1,0 +1,24 @@
+function grad=basisGradient(node, xi_1)
+% inputs
+%   node: local node for which basis function is defined
+%   xi: [xi_1,xi_2] point where the basis function needs to be evaluated
+% output
+%   phi: basis function value at x
+global basis_type
+
+switch(basis_type)
+    case('linear1d')
+        if node==1
+            grad = (-1/2)*ones(size(xi_1));
+        elseif node==2
+            grad =  (1/2)*ones(size(xi_1));
+        end
+    case('quadratic1d')
+        if node==1
+            grad = (xi_1)-1/2;
+        elseif node==2
+            grad =  -2*xi_1 ;
+        elseif node==3
+            grad = xi_1 + 
+        end
+
