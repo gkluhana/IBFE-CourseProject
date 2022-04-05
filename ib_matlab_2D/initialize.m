@@ -6,7 +6,7 @@ h=L/N
 ip=[(2:N),1]
 im=[N,(1:(N-1))]
 Nb=ceil(pi*(L/2)/(h/2))
-% Nb = 5
+% Nb = 4
 dtheta=2*pi/Nb
 kp=[(2:Nb),1]
 km=[Nb,(1:(Nb-1))]
@@ -21,6 +21,7 @@ clockmax=ceil(tmax/dt)
 % Dimension of lagrangian structure
 lag_dim = 2;
 fibers = 3;
+
 
 % Lagrangian discretization type
 % FDCD: FD centered
@@ -50,14 +51,18 @@ switch(lag_dim)
         gamma = 0.01;
         dtheta=2*pi*R/Nb;
         w = 0.0625;
+        dw = w/(fibers-1);
         for k=0:(Nb-1)
             for i = 0 : fibers-1     
               theta=k*dtheta;
-              dw = w/(fibers-1)
-              X(k+1+i*Nb,1)=(L/2) + R*(1+i*(w/2))*cos(theta/R);
-              X(k+1+i*Nb,2)=(L/2) + R*(1+i*(w/2))*sin(theta/R);
+              gamma = 0;
+              X(k+1+i*Nb,1)=(L/2) + R*(1+i*dw)*cos(theta/R);
+              X(k+1+i*Nb,2)=(L/2) + R*(1+i*dw)*sin(theta/R);
+%               X(k+1+i*Nb,1)=(L/2)+L/4*(1+i*dw)*cos(theta);
+%               X(k+1+i*Nb,2)=(L/2)+L/4*(1+ gamma+i*dw)*sin(theta);
             end
         end
+%         dtheta = dtheta/R;
 end
 
 u=zeros(N,N,2);
@@ -98,7 +103,7 @@ hold on
   end
 axis([0,L,0,L])
 % caxis(valminmax)
-% title(strcat(lag_type,basis_type))
+title(strcat(lag_type,basis_type))
 axis equal
 axis manual
 drawnow

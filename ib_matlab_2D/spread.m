@@ -1,11 +1,12 @@
 function f=spread(F,X)
 global h N dtheta Nb;
-global lag_dim fibers
+global lag_dim fibers dw
 
-c=dtheta/(h*h);
+
 f=zeros(N,N,2);
 switch(lag_dim)
     case(1)
+        c=dtheta /(h*h);
         for k=1:Nb
           s=X(k,:)/h;
           i=floor(s);
@@ -17,6 +18,7 @@ switch(lag_dim)
           f(i1,i2,2)=f(i1,i2,2)+(c*F(k,2))*w;
         end
     case(2)
+        c=dtheta*dw /(h*h);
         for k=1:fibers*Nb
           s=X(k,:)/h;
           i=floor(s);

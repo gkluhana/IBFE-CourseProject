@@ -34,20 +34,21 @@ switch(lag_dim)
     case(2)
         Kbar = zeros(fibers*Nb);
         fac = dw/dtheta;
-        for e = 1:length(T)
-            Klocal(:)=0;
-            for q1 = 1:length(quadPoints)
-                for q2 = 1:length(quadPoints)
-                    for i = 1:elemNodes
-                        for j = 1:elemNodes
-                            gradi = basisGradient(i,[quadPoints(q1),quadPoints(q2)]); 
-                            gradj = basisGradient(j,[quadPoints(q1),quadPoints(q2)]);
-                            Klocal(i,j) = Klocal(i,j) +gradi(1)*gradj(1)...
-                                *quadWeights(q1)*quadWeights(q2)*fac;
-                        end
+        
+        Klocal(:)=0;
+        for q1 = 1:length(quadPoints)
+            for q2 = 1:length(quadPoints)
+                for i = 1:elemNodes
+                    for j = 1:elemNodes
+                        gradi = basisGradient(i,[quadPoints(q1),quadPoints(q2)]); 
+                        gradj = basisGradient(j,[quadPoints(q1),quadPoints(q2)]);
+                        Klocal(i,j) = Klocal(i,j) +gradi(1)*gradj(1)...
+                            *quadWeights(q1)*quadWeights(q2)*fac;
                     end
                 end
             end
+        end
+        for e = 1:length(T)
             Kbar(T(:,e),T(:,e)) = Kbar(T(:,e),T(:,e))+Klocal;    
         end
       
