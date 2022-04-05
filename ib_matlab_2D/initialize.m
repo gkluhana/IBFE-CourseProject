@@ -6,20 +6,21 @@ h=L/N
 ip=[(2:N),1]
 im=[N,(1:(N-1))]
 Nb=ceil(pi*(L/2)/(h/2))
-% Nb = 8
+% Nb = 5
 dtheta=2*pi/Nb
 kp=[(2:Nb),1]
 km=[Nb,(1:(Nb-1))]
 K = 1
 rho=1
 mu=0.01
-tmax=4
+tmax=1
 dt=0.01
 clockmax=ceil(tmax/dt)
-fibers = 2;
+
 
 % Dimension of lagrangian structure
-lag_dim = 1;
+lag_dim = 2;
+fibers = 3;
 
 % Lagrangian discretization type
 % FDCD: FD centered
@@ -28,8 +29,8 @@ lag_dim = 1;
 lag_type  = 'FE'
 
 % basis functions
-% elem_type = 'linear'
-elem_type = 'quadratic'
+elem_type = 'linear'
+% elem_type = 'quadratic'
 
 basis_type =  strcat(elem_type,num2str(lag_dim),'d')
 
@@ -52,6 +53,7 @@ switch(lag_dim)
         for k=0:(Nb-1)
             for i = 0 : fibers-1     
               theta=k*dtheta;
+              dw = w/(fibers-1)
               X(k+1+i*Nb,1)=(L/2) + R*(1+i*(w/2))*cos(theta/R);
               X(k+1+i*Nb,2)=(L/2) + R*(1+i*(w/2))*sin(theta/R);
             end
@@ -95,10 +97,11 @@ hold on
           end
   end
 axis([0,L,0,L])
-caxis(valminmax)
-title(strcat(lag_type,basis_type))
+% caxis(valminmax)
+% title(strcat(lag_type,basis_type))
 axis equal
 axis manual
 drawnow
 hold off
+
 

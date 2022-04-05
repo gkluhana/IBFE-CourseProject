@@ -15,7 +15,7 @@ switch lag_type
         else 
             Mbar = mass(Nb);
             Kbar = stiffness(Nb);
-%             b = rhs(X);
+%             b = -(K)*Fh(X);
             b = -(K/w)*Kbar*X;
         end 
         F = Mbar\b;

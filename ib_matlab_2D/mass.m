@@ -1,6 +1,6 @@
 function Mbar = mass(Nb)
 global dtheta T elemNodes elems basis_type lag_dim fibers
-global X w
+global X dw
 % e = ones(Nb,1);
 % Mbar = spdiags([e 4*e e], -1:1, Nb,Nb);
 % 
@@ -29,7 +29,7 @@ switch(lag_dim)
         end
     case(2)
         Mbar = zeros(fibers*Nb);
-        detJ = (dtheta/2)*(w/2);
+        detJ = (dtheta/2)*(dw/2);
         for e = 1:length(T)
             Mlocal(:)=0;
             for q1 = 1:length(quadPoints)

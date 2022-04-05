@@ -5,16 +5,17 @@ global dt Nb N h rho mu ip im a;
 global kp km dtheta K;
 % finite element global variables
 global lag_dim lag_type basis_type T  elemNodes elems Kbar Mbar;
-global X w fibers;
+global X w dw fibers trajectory;
 initialize
 init_a
-
+trajectory = zeros(clockmax,2);
+trajectory(1,:) = X(1,:)
 for clock=1:clockmax
   XX=X+(dt/2)*interp(u,X);
   ff=spread(Force(XX),XX);
   [u,uu]=fluid(u,ff);
   X=X+dt*interp(uu,XX);
-  
+  trajectory(clock,:) = X(1,:);
   %animation:
   vorticity=(u(ip,:,2)-u(im,:,2)-u(:,ip,1)+u(:,im,1))/(2*h);
   contour(xgrid,ygrid,vorticity,values)

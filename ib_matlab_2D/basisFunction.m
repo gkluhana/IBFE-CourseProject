@@ -1,7 +1,7 @@
 function phi=basisFunction(node, xi)
 % inputs
 %   node: local node for which basis function is defined
-%   xi: xi or [xi_1,xi_2] point where the basis function needs to be evaluated
+%   xi: vector of coordinates where basis function is evaluated
 % output
 %   phi: basis function value at x
 global basis_type

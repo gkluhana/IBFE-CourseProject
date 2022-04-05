@@ -1,7 +1,7 @@
 % test Basis
 global basis_type
 basis_type = 'quadratic1d'
-close all
+% close all
 % x=-1:0.1:1;
 % 
 % phi1 = basisFunction(1,x);
@@ -29,8 +29,8 @@ y = -1:0.1:1
 Z=zeros(size(X))
 for i = 1:size(X,1)
     for j = 1:size(X,2)
-        Z(i,j) = basisFunction(4,[X(i,j),Y(i,j)])
-        grad =basisGradient(4,[X(i,j),Y(i,j)])
+        Z(i,j) = basisFunction(1,[X(i,j),Y(i,j)])
+        grad =basisGradient(1,[X(i,j),Y(i,j)])
         Z2(i,j) = grad(1);
         Z3(i,j) = grad(2);
     end
@@ -39,5 +39,5 @@ end
 % figure
 surf(X,Y,Z)
 hold on
-surf(X,Y,Z3)
+surf(X,Y,Z2)
 

@@ -1,7 +1,7 @@
 function Kbar = stiffness(Nb)
 global  T dtheta
 global dtheta T elemNodes elems basis_type lag_dim fibers
-global X w
+global X dw
 
 % e = ones(Nb,1);
 % Kbar = spdiags([-e 2*e -e], -1:1, Nb,Nb);
@@ -18,7 +18,7 @@ Klocal = zeros(elemNodes);
 switch(lag_dim)
     case(1)
         Kbar = zeros(Nb);
-        fac = 2/dtheta; %detJ * d(xi)/dx *
+        fac = 2/dtheta; %detJ * d(xi)/dx * d(xi)/dx 
         for q1 = 1:2
             for i = 1:elemNodes
                 for j = 1:elemNodes
@@ -33,8 +33,7 @@ switch(lag_dim)
         end
     case(2)
         Kbar = zeros(fibers*Nb);
-%         dw = w/2;
-        fac = w/dtheta;
+        fac = dw/dtheta;
         for e = 1:length(T)
             Klocal(:)=0;
             for q1 = 1:length(quadPoints)

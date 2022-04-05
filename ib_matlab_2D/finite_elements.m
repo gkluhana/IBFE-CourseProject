@@ -14,8 +14,8 @@ switch(basis_type)
         Kbar = stiffness(Nb);
     case('linear2d')
         T = [1:Nb; 2:Nb,1; Nb+2:2*Nb,Nb+1; Nb+1:2*Nb];
-%         T2 = [Nb+1:2*Nb; Nb+2:2*Nb,Nb+1; 2*Nb+2:3*Nb,2*Nb+1 ; 2*Nb+1:3*Nb];
-%         T = [T T2];
+        T2 = [Nb+1:2*Nb; Nb+2:2*Nb,Nb+1; 2*Nb+2:3*Nb,2*Nb+1 ; 2*Nb+1:3*Nb];
+        T = [T T2];
         elems = Nb*(fibers-1);
         elemNodes = 4;
 end
